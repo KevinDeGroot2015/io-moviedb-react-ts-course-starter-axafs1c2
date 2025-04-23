@@ -1,9 +1,12 @@
 import { FunctionComponent } from 'react';
+import { DataContext } from '../context/DataContext';
+import { useContext } from 'react';
 
 const Search: FunctionComponent = () => {
+  const { setSearchMovie } = useContext(DataContext);
 
-  const handleSearchMovie = () => {
-    console.log('aloha!')
+  const handleSearchMovie = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchMovie(e.target.value);
   }
 
   return (

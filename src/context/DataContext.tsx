@@ -1,21 +1,31 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
 import { IMDBMovie } from '../model/movie';
 
-type DataContextType = {
+interface DataContextType {
     data: IMDBMovie[];
+    setSearchMovie: React.Dispatch<React.SetStateAction<string>>;
 }
 
 type DataProviderProps = {
     children: ReactNode;
 }
 
-export const DataContext = createContext<DataContextType | undefined>(undefined);
+export const DataContext = createContext<DataContextType>({
+    data: [],
+    setSearchMovie: () => {},
+  });
 
 export const DataContextProvider = ({ children }: DataProviderProps) => {
     const [data, setData] = useState<IMDBMovie[]>([]);
+    const [searchMovie, setSearchMovie] = useState<string>("");
 
     useEffect(() => {
-    fetch('https://www.omdbapi.com/?apikey=1a993ee0&s=')
+        if (!searchMovie.trim()) {
+            setData([]);
+            return;
+        }
+
+        fetch(`https://www.omdbapi.com/?apikey=1a993ee0&s=${searchMovie}`)
         .then((r) => r.json())
         .then((d) => {
             if (d.Search) {
@@ -27,11 +37,11 @@ export const DataContextProvider = ({ children }: DataProviderProps) => {
         .catch((error) => {
             console.error('Error:', error);
         });
-    }, []);
+    }, [searchMovie]);
 
 
   return (
-    <DataContext.Provider value={{ data }}>
+    <DataContext.Provider value={{ data, setSearchMovie }}>
       {children}
     </DataContext.Provider>
   );

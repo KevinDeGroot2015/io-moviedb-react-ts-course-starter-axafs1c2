@@ -4,8 +4,7 @@ import { useContext } from 'react';
 import { IMDBMovie } from '../model/movie';
 
 const Home: FunctionComponent = () => {
-  const context = useContext(DataContext) || { data: [] };
-  const { data } = context;
+  const { data } = useContext(DataContext);
 
   return (
       <ul
