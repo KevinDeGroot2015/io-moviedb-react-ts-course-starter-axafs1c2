@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
+import NavLink from './NavLink';
 
 const Sidebar: FunctionComponent = ({}) => {
   return (
@@ -8,18 +9,8 @@ const Sidebar: FunctionComponent = ({}) => {
       className="sticky top-4 divide-y divide-gray-300"
     >
       <div className="pb-8 space-y-2">
-        <Link
-          to="/"
-          className="block text-center bg-gray-200 py-2 px-3 shadow hover:bg-gray-500 hover:text-white transition"
-        >
-          Home
-        </Link>
-        <Link
-          to="/favorites"
-          className="block text-center bg-gray-200 py-2 px-3 shadow hover:bg-gray-500 hover:text-white transition"
-        >
-          Favorites
-        </Link>
+        <NavLink to="/" name="Home" />
+        <NavLink to="/favorites" name="Favorites" />
       </div>
     </nav>
   );
