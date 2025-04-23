@@ -1,11 +1,15 @@
 import { BrowserRouter } from "react-router-dom";
 import Router from "./routes/Router";
+import { DataContextProvider } from "./context/DataContext";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
+    <DataContextProvider>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </DataContextProvider>
+  
   );
 };
 
