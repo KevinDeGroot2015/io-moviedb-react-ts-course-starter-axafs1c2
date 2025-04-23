@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent } from 'react';
 import { DataContext } from '../context/DataContext';
 import { useContext } from 'react';
 import { IMDBMovie } from '../model/movie';

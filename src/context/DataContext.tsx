@@ -6,6 +6,8 @@ interface DataContextType {
     setSearchMovie: React.Dispatch<React.SetStateAction<string>>;
     setMovieDetail: React.Dispatch<React.SetStateAction<string>>;
     dataDetail: IMDBMovie | null;
+    favorites: string[];
+    toggleFavorite: (id: string) => void;
 }
 
 type DataProviderProps = {
@@ -17,6 +19,8 @@ export const DataContext = createContext<DataContextType>({
     setSearchMovie: () => {},
     setMovieDetail: () => {},
     dataDetail: null,
+    favorites: [],
+    toggleFavorite: () => {},
   });
 
 export const DataContextProvider = ({ children }: DataProviderProps) => {
@@ -24,6 +28,7 @@ export const DataContextProvider = ({ children }: DataProviderProps) => {
     const [searchMovie, setSearchMovie] = useState<string>("");
     const [movieDetail, setMovieDetail] = useState<string>("");
     const [dataDetail, setDataDetail] = useState<IMDBMovie | null>(null);
+    const [favorites, setFavorites] = useState<string[]>([]);
 
     useEffect(() => {
         if (!searchMovie.trim()) {
@@ -62,9 +67,15 @@ export const DataContextProvider = ({ children }: DataProviderProps) => {
         });
     }, [movieDetail]);
 
+    const toggleFavorite = (id: string) => {
+        setFavorites(prev =>
+            prev.includes(id) ? prev.filter(favId => favId !== id) : [...prev, id]
+        );
+    };
+
 
   return (
-    <DataContext.Provider value={{ data, setSearchMovie, setMovieDetail, dataDetail }}>
+    <DataContext.Provider value={{ data, setSearchMovie, setMovieDetail, dataDetail, favorites, toggleFavorite }}>
       {children}
     </DataContext.Provider>
   );

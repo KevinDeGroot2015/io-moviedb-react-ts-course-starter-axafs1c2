@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 const Detail: FunctionComponent = () => {
   const { dataDetail } = useContext(DataContext);
+
   return (
     <div className="bg-white">
       <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -16,7 +17,7 @@ const Detail: FunctionComponent = () => {
             </div>
           </div>
           <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
-            <Toggle />
+            {dataDetail?.imdbID && <Toggle movieId={dataDetail.imdbID} />}
             <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
               {dataDetail?.Title}
             </h1>
