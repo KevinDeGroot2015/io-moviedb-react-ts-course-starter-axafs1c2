@@ -12,9 +12,13 @@ const Home: FunctionComponent = () => {
         role="list"
         className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
       >
-        {data.map((item: IMDBMovie) => {
-          return <li key={item.imdbID}>{item.Title}</li>
-        })}
+        {data && data.length > 0 ? (
+          data.map((movie: IMDBMovie) => {
+            return <li key={movie.imdbID}>{movie.Title}</li>;
+          })
+        ) : (
+          <li>Search all movies!</li>
+        )}
       </ul>
   );
 };

@@ -1,6 +1,11 @@
 import { FunctionComponent } from 'react';
 
 const Search: FunctionComponent = () => {
+
+  const handleSearchMovie = () => {
+    console.log('aloha!')
+  }
+
   return (
     <div className="w-full">
       <label className="sr-only">{}</label>
@@ -24,6 +29,7 @@ const Search: FunctionComponent = () => {
           className="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-rose-500 focus:border-rose-500 sm:text-sm"
           placeholder="Search"
           type="search"
+          onChange={handleSearchMovie}
         />
       </div>
     </div>

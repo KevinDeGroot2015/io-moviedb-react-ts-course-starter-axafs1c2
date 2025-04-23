@@ -15,7 +15,7 @@ export const DataContextProvider = ({ children }: DataProviderProps) => {
     const [data, setData] = useState<IMDBMovie[]>([]);
 
     useEffect(() => {
-    fetch('https://www.omdbapi.com/?apikey=1a993ee0&s=blade')
+    fetch('https://www.omdbapi.com/?apikey=1a993ee0&s=')
         .then((r) => r.json())
         .then((d) => {
             if (d.Search) {
