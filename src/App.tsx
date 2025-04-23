@@ -1,4 +1,5 @@
 import Header from "./components/Header";
+import Main from "./components/Main";
 import Sidebar from "./components/Sidebar";
 
 const App = () => {
@@ -10,7 +11,7 @@ const App = () => {
           <div className="hidden lg:block lg:col-span-3 xl:col-span-2">
             <Sidebar />
           </div>
-          <main className="lg:col-span-9">{/* routing */}</main>
+            <Main />
         </div>
       </div>
     </div>
