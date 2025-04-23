@@ -1,13 +1,14 @@
-import { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 
 interface MovieCardProps {
   image: string,
   title: string,
   year: string,
-  onClick: () => void;
+  onClick?: () => void;
+  children?: React.ReactNode;
 }
 
-const MovieCard: FunctionComponent<MovieCardProps> = ({ image, title, year, onClick }) => {
+const MovieCard: FunctionComponent<MovieCardProps> = ({ image, title, year, onClick, children }) => {
 
   return (
     <li className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200" onClick={onClick}>
@@ -18,6 +19,9 @@ const MovieCard: FunctionComponent<MovieCardProps> = ({ image, title, year, onCl
           <dl className="mt-1 flex-grow flex flex-col justify-between">
             <dd className="text-gray-500 text-sm">{year}</dd>
           </dl>
+        </div>
+        <div className="p-4 flex flex-row justify-between">
+          {children}
         </div>
       </div>
     </li>

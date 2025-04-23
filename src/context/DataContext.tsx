@@ -8,6 +8,7 @@ interface DataContextType {
     dataDetail: IMDBMovie | null;
     favorites: IMDBMovie[];
     toggleFavorite: (movie: IMDBMovie) => void;
+    deleteFavorite: (imdbID: string) => void;
 }
 
 type DataProviderProps = {
@@ -21,6 +22,7 @@ export const DataContext = createContext<DataContextType>({
     dataDetail: null,
     favorites: [],
     toggleFavorite: () => {},
+    deleteFavorite: () => {},
   });
 
 export const DataContextProvider = ({ children }: DataProviderProps) => {
@@ -76,11 +78,15 @@ export const DataContextProvider = ({ children }: DataProviderProps) => {
             return [...prev, movie];
           }
         });
-      };
+    };
+
+    const deleteFavorite = (imdbID: string) => {
+        setFavorites(prev => prev.filter(fav => fav.imdbID !== imdbID));
+    };
 
 
   return (
-    <DataContext.Provider value={{ data, setSearchMovie, setMovieDetail, dataDetail, favorites, toggleFavorite }}>
+    <DataContext.Provider value={{ data, setSearchMovie, setMovieDetail, dataDetail, favorites, toggleFavorite, deleteFavorite }}>
       {children}
     </DataContext.Provider>
   );
