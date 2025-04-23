@@ -3,7 +3,7 @@ import { DataContext } from '../context/DataContext';
 import { useContext } from 'react';
 import MovieCard from '../components/MovieCard';
 import { IMDBMovie } from '../model/movie';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Favorites: FunctionComponent = () => {
   const { favorites, deleteFavorite } = useContext(DataContext);

@@ -9,6 +9,7 @@ interface DataContextType {
     favorites: IMDBMovie[];
     toggleFavorite: (movie: IMDBMovie) => void;
     deleteFavorite: (imdbID: string) => void;
+    favoriteDetail: (imdbID: string) => IMDBMovie | undefined;
 }
 
 type DataProviderProps = {
@@ -23,6 +24,7 @@ export const DataContext = createContext<DataContextType>({
     favorites: [],
     toggleFavorite: () => {},
     deleteFavorite: () => {},
+    favoriteDetail: () => undefined,
   });
 
 export const DataContextProvider = ({ children }: DataProviderProps) => {
@@ -31,6 +33,7 @@ export const DataContextProvider = ({ children }: DataProviderProps) => {
     const [movieDetail, setMovieDetail] = useState<string>("");
     const [dataDetail, setDataDetail] = useState<IMDBMovie | null>(null);
     const [favorites, setFavorites] = useState<IMDBMovie[]>([]);
+    
 
     useEffect(() => {
         if (!searchMovie.trim()) {
@@ -84,9 +87,13 @@ export const DataContextProvider = ({ children }: DataProviderProps) => {
         setFavorites(prev => prev.filter(fav => fav.imdbID !== imdbID));
     };
 
+    const favoriteDetail = (imdbID: string): IMDBMovie | undefined => {
+        return favorites.find(fav => fav.imdbID === imdbID);
+    };
+
 
   return (
-    <DataContext.Provider value={{ data, setSearchMovie, setMovieDetail, dataDetail, favorites, toggleFavorite, deleteFavorite }}>
+    <DataContext.Provider value={{ data, setSearchMovie, setMovieDetail, dataDetail, favorites, toggleFavorite, deleteFavorite, favoriteDetail }}>
       {children}
     </DataContext.Provider>
   );

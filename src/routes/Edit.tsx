@@ -1,13 +1,22 @@
 import { FunctionComponent } from 'react';
+import { DataContext } from '../context/DataContext';
+import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 
 const Edit: FunctionComponent = () => {
+  const { id } = useParams();
+
+  const { favoriteDetail } = useContext(DataContext);
+  const favorite = favoriteDetail(`${id}`);
+  
+
   return (
     <div className="bg-white">
       <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
           <div>
             <div className="w-full aspect-w-1 aspect-h-1">
-              <img className="w-full h-full object-center object-cover sm:rounded-lg" />
+              <img src={favorite?.Poster} className="w-full h-full object-center object-cover sm:rounded-lg" />
             </div>
           </div>
           <form>
@@ -21,6 +30,7 @@ const Edit: FunctionComponent = () => {
                     name="Title"
                     type="text"
                     className="shadow-sm p-2 block w-full sm:text-sm border-gray-300 rounded-md"
+                    value={favorite?.Title}
                   />
                 </div>
               </div>
@@ -34,6 +44,7 @@ const Edit: FunctionComponent = () => {
                     name="Year"
                     type="text"
                     className="shadow-sm p-2 block w-full sm:text-sm border-gray-300 rounded-md"
+                    value={favorite?.Year}
                   />
                 </div>
               </div>
@@ -47,6 +58,7 @@ const Edit: FunctionComponent = () => {
                     name="Actors"
                     type="text"
                     className="shadow-sm p-2 block w-full sm:text-sm border-gray-300 rounded-md"
+                    value={favorite?.Actors}
                   />
                 </div>
               </div>
