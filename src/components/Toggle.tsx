@@ -1,17 +1,18 @@
 import { FunctionComponent, useContext } from 'react';
 import { DataContext } from '../context/DataContext';
+import { IMDBMovie } from '../model/movie';
 
 type ToggleProps = {
-  movieId: string;
+  movie: IMDBMovie;
 }
 
-const Toggle: FunctionComponent<ToggleProps> = ({ movieId }) => {
+const Toggle: FunctionComponent<ToggleProps> = ({ movie }) => {
   const { favorites, toggleFavorite } = useContext(DataContext);
 
-  const isFavorite = favorites.includes(movieId);
+  const isFavorite = favorites.some(fav => fav.imdbID === movie.imdbID);
 
   const handleToggleFavorite = () => {
-    toggleFavorite(movieId);
+    toggleFavorite(movie);
   };
 
 

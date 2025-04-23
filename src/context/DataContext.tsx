@@ -6,8 +6,8 @@ interface DataContextType {
     setSearchMovie: React.Dispatch<React.SetStateAction<string>>;
     setMovieDetail: React.Dispatch<React.SetStateAction<string>>;
     dataDetail: IMDBMovie | null;
-    favorites: string[];
-    toggleFavorite: (id: string) => void;
+    favorites: IMDBMovie[];
+    toggleFavorite: (movie: IMDBMovie) => void;
 }
 
 type DataProviderProps = {
@@ -28,7 +28,7 @@ export const DataContextProvider = ({ children }: DataProviderProps) => {
     const [searchMovie, setSearchMovie] = useState<string>("");
     const [movieDetail, setMovieDetail] = useState<string>("");
     const [dataDetail, setDataDetail] = useState<IMDBMovie | null>(null);
-    const [favorites, setFavorites] = useState<string[]>([]);
+    const [favorites, setFavorites] = useState<IMDBMovie[]>([]);
 
     useEffect(() => {
         if (!searchMovie.trim()) {
@@ -67,11 +67,16 @@ export const DataContextProvider = ({ children }: DataProviderProps) => {
         });
     }, [movieDetail]);
 
-    const toggleFavorite = (id: string) => {
-        setFavorites(prev =>
-            prev.includes(id) ? prev.filter(favId => favId !== id) : [...prev, id]
-        );
-    };
+    const toggleFavorite = (movie: IMDBMovie) => {
+        setFavorites(prev => {
+          const isFavorite = prev.some(fav => fav.imdbID === movie.imdbID);
+          if (isFavorite) {
+            return prev.filter(fav => fav.imdbID !== movie.imdbID);
+          } else {
+            return [...prev, movie];
+          }
+        });
+      };
 
 
   return (

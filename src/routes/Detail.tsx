@@ -17,7 +17,7 @@ const Detail: FunctionComponent = () => {
             </div>
           </div>
           <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
-            {dataDetail?.imdbID && <Toggle movieId={dataDetail.imdbID} />}
+            {dataDetail && <Toggle movie={dataDetail} />}
             <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
               {dataDetail?.Title}
             </h1>
