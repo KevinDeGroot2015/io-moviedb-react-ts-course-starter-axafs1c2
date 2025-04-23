@@ -1,11 +1,13 @@
-import { FunctionComponent } from 'react';
+import { ReactNode } from 'react';
 
-const Main: FunctionComponent = ({}) => {
+type MainProps = {
+    children: ReactNode;
+};
+
+const Main = ({ children }: MainProps) => {
   return (
-    <main className="lg:col-span-9">{/* routing */}</main>
+    <main className="lg:col-span-9">{children}</main>
   );
 };
 
 export default Main;
-
-
