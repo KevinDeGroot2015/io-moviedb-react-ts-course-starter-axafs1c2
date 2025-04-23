@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 import { DataContext } from '../context/DataContext';
 import { useContext } from 'react';
 import { IMDBMovie } from '../model/movie';
+import MovieCard from '../components/MovieCard';
 
 const Home: FunctionComponent = () => {
   const { data } = useContext(DataContext);
@@ -17,19 +18,7 @@ const Home: FunctionComponent = () => {
       >
         {data && data.length > 0 ? (
           data.map((movie: IMDBMovie) => (
-            <li
-              key={movie.imdbID}
-              className="bg-white rounded-2xl text-center shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
-              onClick={handleMovieDetailRoute}
-            >
-              <img
-                src={movie.Poster}
-                alt={movie.Title}
-                className="w-full h-72 object-cover"
-              />
-              <p className="p-4 font-bold text-lg text-gray-800">{movie.Title}</p>
-              <p className="pb-4">{movie.Year}</p>
-            </li>
+            <MovieCard key={movie.imdbID} image={movie.Poster} title={movie.Title} year={movie.Year} onClick={handleMovieDetailRoute} />
           ))
         ) : (
           <li>Search all movies!</li>
