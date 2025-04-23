@@ -5,7 +5,10 @@ import { IMDBMovie } from '../model/movie';
 
 const Home: FunctionComponent = () => {
   const { data } = useContext(DataContext);
-  console.log(data)
+
+  const handleMovieDetailRoute = () => {
+    console.log('hallo')
+  }
 
   return (
       <ul
@@ -17,6 +20,7 @@ const Home: FunctionComponent = () => {
             <li
               key={movie.imdbID}
               className="bg-white rounded-2xl text-center shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+              onClick={handleMovieDetailRoute}
             >
               <img
                 src={movie.Poster}

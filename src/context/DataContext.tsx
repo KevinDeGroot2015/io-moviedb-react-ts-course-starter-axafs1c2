@@ -4,6 +4,7 @@ import { IMDBMovie } from '../model/movie';
 interface DataContextType {
     data: IMDBMovie[];
     setSearchMovie: React.Dispatch<React.SetStateAction<string>>;
+    setMovieDetail: React.Dispatch<React.SetStateAction<string>>;
 }
 
 type DataProviderProps = {
@@ -13,11 +14,13 @@ type DataProviderProps = {
 export const DataContext = createContext<DataContextType>({
     data: [],
     setSearchMovie: () => {},
+    setMovieDetail: () => {},
   });
 
 export const DataContextProvider = ({ children }: DataProviderProps) => {
     const [data, setData] = useState<IMDBMovie[]>([]);
     const [searchMovie, setSearchMovie] = useState<string>("");
+    const [movieDetail, setMovieDetail] = useState<string>("");
 
     useEffect(() => {
         if (!searchMovie.trim()) {
@@ -41,7 +44,7 @@ export const DataContextProvider = ({ children }: DataProviderProps) => {
 
 
   return (
-    <DataContext.Provider value={{ data, setSearchMovie }}>
+    <DataContext.Provider value={{ data, setSearchMovie, setMovieDetail }}>
       {children}
     </DataContext.Provider>
   );
