@@ -1,5 +1,5 @@
-import { createContext, useState, useEffect, ReactNode } from 'react';
-import { IMDBMovie } from '../model/movie';
+import { createContext, useState, useEffect, ReactNode } from "react";
+import { IMDBMovie } from "../model/movie";
 
 interface DataContextType {
     data: IMDBMovie[];
@@ -14,7 +14,7 @@ interface DataContextType {
 
 type DataProviderProps = {
     children: ReactNode;
-}
+};
 
 export const DataContext = createContext<DataContextType>({
     data: [],
@@ -25,7 +25,7 @@ export const DataContext = createContext<DataContextType>({
     toggleFavorite: () => {},
     deleteFavorite: () => {},
     favoriteDetail: () => undefined,
-  });
+});
 
 export const DataContextProvider = ({ children }: DataProviderProps) => {
     const [data, setData] = useState<IMDBMovie[]>([]);
@@ -33,7 +33,6 @@ export const DataContextProvider = ({ children }: DataProviderProps) => {
     const [movieDetail, setMovieDetail] = useState<string>("");
     const [dataDetail, setDataDetail] = useState<IMDBMovie | null>(null);
     const [favorites, setFavorites] = useState<IMDBMovie[]>([]);
-    
 
     useEffect(() => {
         if (!searchMovie.trim()) {
@@ -41,60 +40,78 @@ export const DataContextProvider = ({ children }: DataProviderProps) => {
             return;
         }
 
-        fetch(`https://www.omdbapi.com/?apikey=1a993ee0&s=${searchMovie}`)
-        .then((r) => r.json())
-        .then((d) => {
-            if (d.Response === "True") {
-                setData(d.Search);
-            } else {
-                console.error('No data:', d);
+        (async () => {
+            try {
+                const response = await fetch(
+                    `https://www.omdbapi.com/?apikey=1a993ee0&s=${searchMovie}`
+                );
+                const data = await response.json();
+
+                if (data.Response === "True") {
+                    setData(data.Search);
+                } else {
+                    console.error("No data:", data);
+                }
+            } catch (error) {
+                console.error("Error:", error);
             }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+        })();
     }, [searchMovie]);
 
     useEffect(() => {
         if (!movieDetail) return;
 
-        fetch(`https://www.omdbapi.com/?apikey=1a993ee0&i=${movieDetail}`)
-        .then((r) => r.json())
-        .then((d) => {
-            if (d) {
-                setDataDetail(d);
-            } else {
-                console.error('No data:', d);
+        (async () => {
+            try {
+                const response = await fetch(
+                    `https://www.omdbapi.com/?apikey=1a993ee0&i=${movieDetail}`
+                );
+                const data = await response.json();
+
+                if (data) {
+                    setDataDetail(data);
+                } else {
+                    console.error("No data:", data);
+                }
+            } catch (error) {
+                console.error("Error:", error);
             }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+        })();
     }, [movieDetail]);
 
     const toggleFavorite = (movie: IMDBMovie) => {
-        setFavorites(prev => {
-          const isFavorite = prev.some(fav => fav.imdbID === movie.imdbID);
-          if (isFavorite) {
-            return prev.filter(fav => fav.imdbID !== movie.imdbID);
-          } else {
-            return [...prev, movie];
-          }
+        setFavorites((prev) => {
+            const isFavorite = prev.some((fav) => fav.imdbID === movie.imdbID);
+            if (isFavorite) {
+                return prev.filter((fav) => fav.imdbID !== movie.imdbID);
+            } else {
+                return [...prev, movie];
+            }
         });
     };
 
     const deleteFavorite = (imdbID: string) => {
-        setFavorites(prev => prev.filter(fav => fav.imdbID !== imdbID));
+        setFavorites((prev) => prev.filter((fav) => fav.imdbID !== imdbID));
     };
 
     const favoriteDetail = (imdbID: string): IMDBMovie | undefined => {
-        return favorites.find(fav => fav.imdbID === imdbID);
+        return favorites.find((fav) => fav.imdbID === imdbID);
     };
 
-
-  return (
-    <DataContext.Provider value={{ data, setSearchMovie, setMovieDetail, dataDetail, favorites, toggleFavorite, deleteFavorite, favoriteDetail }}>
-      {children}
-    </DataContext.Provider>
-  );
+    return (
+        <DataContext.Provider
+            value={{
+                data,
+                setSearchMovie,
+                setMovieDetail,
+                dataDetail,
+                favorites,
+                toggleFavorite,
+                deleteFavorite,
+                favoriteDetail,
+            }}
+        >
+            {children}
+        </DataContext.Provider>
+    );
 };
